@@ -128,7 +128,7 @@ var TeamTable = React.createClass({
 
     return (
       <div>
-        <table>
+        <table className="table table-striped">
           <thead>
             <tr>
               <th>Name</th>
@@ -166,7 +166,11 @@ var SearchBar = React.createClass({
 
   render: function() {
     return (
-      <input onChange={this.handleFilterTextChanged} type="text" placeholder="Filter by name" ref="filterText" />
+      <form className="form-inline">
+        <div className="form-group">
+          <input className="form-control" onChange={this.handleFilterTextChanged} type="text" placeholder="Filter by name" ref="filterText" />
+        </div>
+      </form>
     );
   }
 });
@@ -199,10 +203,18 @@ var AddForm = React.createClass({
   render: function() {
     return (
       <div>
-        <form onSubmit={this.handleFormSubmit}>
-          <input type="text" placeholder="Name" ref="name" />
-          <input type="text" placeholder="Rating" ref="rating" />
-          <input type="submit" value="Add!" />
+        <form className="horizontal-form" onSubmit={this.handleFormSubmit}>
+          <div className="form-group">
+            <label for="input-name" className="control-label">Name</label>
+            <input className="form-control" id="input-name" type="text" placeholder="Name" ref="name" />
+          </div>
+          <div className="form-group">
+            <label for="input-rating" className="control-label">Rating</label>
+            <input className="form-control" id="input-rating" type="text" placeholder="Rating" ref="rating" />
+          </div>
+          <div className="form-group">
+            <input className="btn btn-primary" type="submit" value="Add!" />
+          </div>
         </form>
       </div>
     );
