@@ -1,6 +1,8 @@
 'use strict'
 
-var teams = [
+var Flux = new McFly();
+
+var _teams = [
   {
     name: "Real Madrid",
     rating: "GOOD"
@@ -22,16 +24,53 @@ var teams = [
   }
 ];
 
+function addTeam(team) {
+  _teams.push(team);
+}
+
+var TeamStore = Flux.createStore({
+
+  getTeams: function() {
+    return _teams;
+  }
+
+}, function(payload) {
+  switch(payload.actionType) {
+    case 'ADD_TEAM':
+      addTeam(payload.team);
+      break;
+  }
+
+  TeamStore.emitChange();
+});
+
+
+var TeamActions = Flux.createActions({
+  addTeam: function(team) {
+    return {
+      actionType: 'ADD_TEAM',
+      team: team
+    }
+  }
+});
+
 var MainComponent = React.createClass({
+
+  mixins: [TeamStore.mixin],
+
+  getTeams: function() {
+    return TeamStore.getTeams();
+  },
+
   getInitialState: function() {
     return {
-        teams: this.props.initialTeams
+        teams: this.getTeams()
     };
   },
 
-  teamAdded: function(team) {
+  storeDidChange: function() {
     this.setState({
-      teams: this.state.teams.concat([team])
+      teams: this.getTeams()
     });
   },
 
@@ -39,7 +78,7 @@ var MainComponent = React.createClass({
     return (
       <div className="col-lg-4 col-lg-offset-4">
         <FilterableTeamTable teams={this.state.teams}/>
-        <AddForm submitCallback={this.teamAdded}/>
+        <AddForm/>
       </div>
     );
   }
@@ -141,7 +180,7 @@ var AddForm = React.createClass({
     var rating = this._trimmedValue(this.refs.rating);
 
     if (name && rating) {
-      this.props.submitCallback(
+      TeamActions.addTeam(
         {name: name, rating: rating}
       );
       this._clearField(this.refs.name);
@@ -171,5 +210,5 @@ var AddForm = React.createClass({
 })
 
 React.render(
-  <MainComponent initialTeams={teams}/>, document.body
+  <MainComponent/>, document.body
 );
