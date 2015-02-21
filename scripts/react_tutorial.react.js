@@ -1,6 +1,8 @@
 'use strict'
 
 var Flux = new McFly();
+var Table = ReactBootstrap.Table;
+var Input = ReactBootstrap.Input;
 
 var _teams = [
   {
@@ -127,8 +129,7 @@ var TeamTable = React.createClass({
     });
 
     return (
-      <div>
-        <table className="table table-striped">
+        <Table striped>
           <thead>
             <tr>
               <th>Name</th>
@@ -139,9 +140,7 @@ var TeamTable = React.createClass({
           <tbody>
             {rows}
           </tbody>
-        </table>
-
-      </div>
+        </Table>
     );
   }
 });
@@ -160,16 +159,14 @@ var TeamRow = React.createClass({
 var SearchBar = React.createClass({
   handleFilterTextChanged: function() {
     this.props.onFilterTextChanged(
-      this.refs.filterText.getDOMNode().value
+      this.refs.filterText.getInputDOMNode().value
     );
   },
 
   render: function() {
     return (
       <form className="form-inline">
-        <div className="form-group">
-          <input className="form-control" onChange={this.handleFilterTextChanged} type="text" placeholder="Filter by name" ref="filterText" />
-        </div>
+        <Input onChange={this.handleFilterTextChanged} type="text" placeholder="Filter by name" ref="filterText" />
       </form>
     );
   }
@@ -193,30 +190,20 @@ var AddForm = React.createClass({
   },
 
   _trimmedValue: function(field) {
-    return field.getDOMNode().value.trim();
+    return field.getInputDOMNode().value.trim();
   },
 
   _clearField: function(field) {
-    field.getDOMNode().value = '';
+    field.getInputDOMNode().value = '';
   },
 
   render: function() {
     return (
-      <div>
-        <form className="horizontal-form" onSubmit={this.handleFormSubmit}>
-          <div className="form-group">
-            <label for="input-name" className="control-label">Name</label>
-            <input className="form-control" id="input-name" type="text" placeholder="Name" ref="name" />
-          </div>
-          <div className="form-group">
-            <label for="input-rating" className="control-label">Rating</label>
-            <input className="form-control" id="input-rating" type="text" placeholder="Rating" ref="rating" />
-          </div>
-          <div className="form-group">
-            <input className="btn btn-primary" type="submit" value="Add!" />
-          </div>
+        <form onSubmit={this.handleFormSubmit}>
+          <Input label="Name" type="text" placeholder="Name" ref="name" />
+          <Input label="Rating" type="text" placeholder="Rating" ref="rating" />
+          <Input bsStyle="primary" type="submit" value="Add!" />
         </form>
-      </div>
     );
   }
 })
