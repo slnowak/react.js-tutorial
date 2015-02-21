@@ -1,0 +1,21 @@
+{
+  "name": "react_tutorial",
+  "version": "0.0.1",
+  "authors": [
+    "novy154 <slnowak154@gmail.com>"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ],
+  "dependencies": {
+    "react": "latest",
+    "bootstrap": "latest",
+    "jquery": "latest",
+    "require": "latest"
+  }
+}
