@@ -22,11 +22,35 @@ var teams = [
   }
 ];
 
+var MainComponent = React.createClass({
+  getInitialState: function() {
+    return {
+        teams: this.props.initialTeams
+    };
+  },
+
+  teamAdded: function(team) {
+    this.setState({
+      teams: this.state.teams.concat([team])
+    });
+  },
+
+  render: function() {
+    return (
+      <div className="col-lg-4 col-lg-offset-4">
+        <FilterableTeamTable teams={this.state.teams}/>
+        <AddForm submitCallback={this.teamAdded}/>
+      </div>
+    );
+  }
+
+});
+
 
 var FilterableTeamTable = React.createClass({
   getInitialState: function() {
     return {
-      filterText: ''
+      filterText: ""
     };
   },
 
@@ -108,6 +132,44 @@ var SearchBar = React.createClass({
   }
 });
 
+
+var AddForm = React.createClass({
+  handleFormSubmit: function(e) {
+    e.preventDefault();
+
+    var name = this._trimmedValue(this.refs.name);
+    var rating = this._trimmedValue(this.refs.rating);
+
+    if (name && rating) {
+      this.props.submitCallback(
+        {name: name, rating: rating}
+      );
+      this._clearField(this.refs.name);
+      this._clearField(this.refs.rating);
+    }
+  },
+
+  _trimmedValue: function(field) {
+    return field.getDOMNode().value.trim();
+  },
+
+  _clearField: function(field) {
+    field.getDOMNode().value = '';
+  },
+
+  render: function() {
+    return (
+      <div>
+        <form onSubmit={this.handleFormSubmit}>
+          <input type="text" placeholder="Name" ref="name" />
+          <input type="text" placeholder="Rating" ref="rating" />
+          <input type="submit" value="Add!" />
+        </form>
+      </div>
+    );
+  }
+})
+
 React.render(
-  <FilterableTeamTable teams={teams}/>, document.body
+  <MainComponent initialTeams={teams}/>, document.body
 );
