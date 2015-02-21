@@ -17,6 +17,6 @@
     "bootstrap": "latest",
     "jquery": "latest",
     "mcfly": "latest",
-    "reactreact-bootstrap": "latest"
+    "react-bootstrap": "latest"
   }
 }
