@@ -30,13 +30,29 @@ var FilterableTeamTable = React.createClass({
     };
   },
 
+  filterTextChanged: function(newFilterText) {
+    this.setState({
+      filterText: newFilterText
+    });
+  },
+
   render: function() {
+    var containsIgnoreCase = this._containsIgnoreCase;
+    var filterText = this.state.filterText;
+    var filteredTeams = this.props.teams.filter(function(team) {
+      return containsIgnoreCase(team.name, filterText);
+    });
+
     return (
       <div>
-        <SearchBar/>
-        <TeamTable teams={this.props.teams}/>
+        <SearchBar onFilterTextChanged={this.filterTextChanged}/>
+        <TeamTable teams={filteredTeams}/>
       </div>
     );
+  },
+
+  _containsIgnoreCase: function (source, stringToContain) {
+    return source.toLowerCase().indexOf(stringToContain.toLowerCase()) > -1;
   }
 
 });
@@ -79,9 +95,15 @@ var TeamRow = React.createClass({
 });
 
 var SearchBar = React.createClass({
+  handleFilterTextChanged: function() {
+    this.props.onFilterTextChanged(
+      this.refs.filterText.getDOMNode().value
+    );
+  },
+
   render: function() {
     return (
-      <input type="text" placeholder="Filter by name" ref="filterText" />
+      <input onChange={this.handleFilterTextChanged} type="text" placeholder="Filter by name" ref="filterText" />
     );
   }
 });
