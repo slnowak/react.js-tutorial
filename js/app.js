@@ -1,5 +1,9 @@
 'use strict'
 
+var React = require('react');
+var ReactBootstrap = require('react-bootstrap');
+var McFly = require('mcfly');
+
 var Flux = new McFly();
 var Table = ReactBootstrap.Table;
 var Input = ReactBootstrap.Input;

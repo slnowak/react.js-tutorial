@@ -1,0 +1,33 @@
+{
+  "name": "react_tutorial",
+  "version": "0.0.1",
+  "main": "js/app.js",
+  "dependencies": {
+    "react": "latest",
+    "bootstrap": "latest",
+    "jquery": "latest",
+    "mcfly": "latest",
+    "react-bootstrap": "latest"
+  },
+  "devDependencies": {
+    "browserify": "latest",
+    "envify": "latest",
+    "jest-cli": "latest",
+    "reactify": "latest",
+    "watchify": "latest"
+  },
+  "scripts": {
+    "start": "watchify -o js/bundle.js -v -d .",
+    "test": "jest"
+  },
+  "author": "novy",
+  "browserify": {
+    "transform": [
+      "reactify",
+      "envify"
+    ]
+  },
+  "jest": {
+    "rootDir": "./js"
+  }
+}
