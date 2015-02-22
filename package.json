@@ -4,6 +4,7 @@
   "main": "js/app.js",
   "dependencies": {
     "react": "latest",
+    "react-tools": "latest",
     "bootstrap": "latest",
     "jquery": "latest",
     "mcfly": "latest",
@@ -28,6 +29,8 @@
     ]
   },
   "jest": {
-    "rootDir": "./js"
+    "rootDir": "./js",
+    "scriptPreprocessor": "<rootDir>/preprocessor.js",
+    "unmockedModulePathPatterns": ["<rootDir>/node_modules/react"]
   }
 }

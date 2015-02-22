@@ -13,8 +13,7 @@ var AddForm = React.createClass({
       TeamActions.addTeam(
         {name: name, rating: rating}
       );
-      this._clearField(this.refs.name);
-      this._clearField(this.refs.rating);
+      this._clearForm();
     }
   },
 
@@ -22,8 +21,29 @@ var AddForm = React.createClass({
     return field.getInputDOMNode().value.trim();
   },
 
-  _clearField: function(field) {
-    field.getInputDOMNode().value = '';
+  _setValue: function(field, value) {
+    field.getInputDOMNode().value = value;
+  },
+
+  _clearForm: function() {
+    this._setValue(this.refs.name, '');
+    this._setValue(this.refs.rating, '');
+  },
+
+  getNameInputValue: function() {
+    return this._trimmedValue(this.refs.name);
+  },
+
+  getRatingInputValue: function() {
+    return this._trimmedValue(this.refs.rating);
+  },
+
+  setNameInputValue: function(name) {
+    this._setValue(this.refs.name, name);
+  },
+
+  setRatingInputValue: function(rating) {
+    this._setValue(this.refs.rating, rating);
   },
 
   render: function() {
